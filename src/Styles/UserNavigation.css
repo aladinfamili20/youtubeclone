@@ -1,0 +1,64 @@
+.naviContainer1{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   }
+.listC li a {
+    padding: 10px;
+    margin-right: 20px;
+    font-weight: bold;
+    color: #0083FF;
+    text-decoration: none;
+
+}
+ 
+ li {
+    list-style: none;
+}
+ 
+ 
+.searchBar {
+    width: 600px;
+    height: 40px;
+    background-color: #ccc;
+    border: none;
+    padding: 10;
+    margin-left: 20px;
+    
+}
+
+.listC li {
+    border: 1px solid #009bff;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: auto;
+    margin-right: 10px;
+    height: 45px;
+ }
+
+.profileImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    padding: 5px;
+     
+}
+
+.profileImage:hover{
+    cursor: pointer;
+}
+.headerProfileDets {
+    display: flex;
+    align-items: center;
+}
+
+.NavCartIcon {
+    font-size: 30px;
+    margin-right: 10px;
+    color: #000;
+}
+.NavCartIcon:hover{
+    cursor: pointer;
+}

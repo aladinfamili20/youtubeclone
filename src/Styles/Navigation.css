@@ -1,0 +1,34 @@
+.naviContainer2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+.clientNavLines  li a {
+    text-decoration: none;
+    border: 1px solid #009bff;
+    padding: 10px;
+    margin-right: 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #0083FF;
+}
+.clientNavLines  li a:hover{
+    background-color: #009bff;
+    color: white;
+    cursor: pointer;
+    border: 1px solid #fff;
+}
+.clientNavLines li {
+    list-style: none;
+}
+ 
+ 
+.searchBar {
+    width: 600px;
+    height: 40px;
+    background-color: #ccc;
+    border: none;
+    padding: 10;
+    margin-left: 20px;
+}
+ 
