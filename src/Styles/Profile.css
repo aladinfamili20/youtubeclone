@@ -1,0 +1,39 @@
+.profileContainer {
+    margin: auto;
+    width: 80%;
+    justify-content: center;
+ }
+
+.profPagePic {
+    border-radius: 50px;
+}
+
+.profileConent {
+    display: flex;
+ }
+
+.ProfNameCon{
+    margin-left: 20px;
+}
+
+.profileConent h2{
+    margin-left: 20px;
+    margin: 0;
+    color: #333;
+    font-size: 30px;
+ }
+.profileConent p{
+    margin: 0;
+    border: 1px solid #0083FF;
+    border-radius: 20px;
+    padding: 5px;
+    text-align: center;
+    
+}
+.profileConent p:hover{
+    background-color: #0083FF;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+ 

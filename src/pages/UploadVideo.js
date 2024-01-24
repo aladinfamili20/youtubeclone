@@ -1,29 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import '../Styles/UploadVideo.css'
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
-import { auth, db, storage } from '../data/firebase';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import {  db, storage } from '../data/firebase';
 import { addDoc, collection } from 'firebase/firestore';
 import { useAuth } from '../auth/AuthContext';
-import { onAuthStateChanged } from 'firebase/auth';
- const UploadVideo = () => {
+import {  useNavigate } from 'react-router-dom';
+   const UploadVideo = () => {
     const {user} = useAuth();
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [videoFile, setVideoFile] = useState(null);
     const [thumbnailUrl, setThumbnailUrl] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
-    // const [displayName, setDisplayName] = useState(null)
-    //  useEffect(()=>{
-    //     onAuthStateChanged(auth, (user)=>{
-    //         if(user){
-    //             setDisplayName(displayName.user);
-    //         }else{
-    //             setDisplayName(null);
-    //         }
-    //     })
-    //  })
-console.log(user)
-    const handleFileChange = async (event) => {
+    
+     const handleFileChange = async (event) => {
       try {
         const file = event.target.files[0];
         setVideoFile(file);
@@ -62,16 +53,24 @@ console.log(user)
   
     const handleUpload = async () => {
         try {
-           
+            const today = new Date();
+            const date = today.toDateString();
+            const Hours = today.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const time = today.toLocaleDateString();
           if (videoFile && videoFile.downloadURL) {
             const videoRef = await addDoc(collection(db, 'videos'), {
               displayName:user.displayName,
               title: title,
               videoFile: videoFile.downloadURL, 
               profPhoto:user.photoURL, 
-               description: description,
+              description: description,
+              uploadedDate: date,
+              postTime: time,
+              Hours: Hours,              
               userId:user.uid
             });
+            navigate('/')
+            alert('Video uploaded successfully')
             console.log('Video uploaded successfully with ID:', videoRef.id);
           }
         } catch (error) {
@@ -90,8 +89,7 @@ console.log(user)
 {videoFile && (
   <video width="500" height="300" controls>
     <source src={videoFile.downloadURL || URL.createObjectURL(videoFile)} type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
+   </video>
 )}
                  
             <div className='titleContainer'>
@@ -115,7 +113,9 @@ console.log(user)
                </div>
             </div>
             </div>
-            <input type='text' placeholder='Tile of the image' value={description} onChange={(e)=>setDescription(e.target.value)} className='discription' />
+            <textarea type='text' placeholder='Tile of the image' value={description} onChange={(e)=>setDescription(e.target.value)} className='discription' >
+             
+            </textarea>
 
             <div className='uploadVideo' onClick={handleUpload}>
                 <h2>Upload Video</h2>

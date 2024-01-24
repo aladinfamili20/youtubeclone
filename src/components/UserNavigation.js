@@ -33,7 +33,7 @@ import { Link } from 'react-router-dom';
               <IoAddCircleOutline className='NavCartIcon'/>
               </Link>
                  <li>
-                  <a href='/login'>Watching as: {user.displayName} </a>
+                  <a href='/profile'>Watching as: {user.displayName} </a>
                   <img src={user.photoURL}  alt='profileImage' className='profileImage'/>
                 </li>
               </div>               

@@ -5,12 +5,12 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 export const firebaseConfig = {
-  apiKey: "AIzaSyCU3KgHyKBv7L3nrZGGZk61gUxRew1t7OA",
-  authDomain: "clone-cbb9f.firebaseapp.com",
-  projectId: "clone-cbb9f",
-  storageBucket: "clone-cbb9f.appspot.com",
-  messagingSenderId: "673043815963",
-  appId: "1:673043815963:web:b6c9f91455b8dd327ea2be"
+  apiKey: "AIzaSyAYfLwX5TiNJqwlddgQ5IsVERTO3KHbK5w",
+  authDomain: "arthubtest.firebaseapp.com",
+  projectId: "arthubtest",
+  storageBucket: "arthubtest.appspot.com",
+  messagingSenderId: "323024746562",
+  appId: "1:323024746562:web:fb529c72b50218b13d15db"
 };
  
 const app = initializeApp(firebaseConfig);

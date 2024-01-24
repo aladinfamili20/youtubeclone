@@ -9,7 +9,9 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './data/firebase';
 import UploadVideo from './pages/UploadVideo';
- 
+import VideoDetail from './pages/VideoDetail';
+import Profile from './pages/Profile';
+  
 function App() {
   const [user, setUser]= useState('')
   const [loading, setLoading] = useState(null)
@@ -31,6 +33,8 @@ function App() {
      <Route path="/" element={<HomePage />} />
      <Route path="/login" element={<LoginPage />} />
      <Route path="/uploadvideo" element={<UploadVideo />} />
+     <Route path="/videodetail/:id" element={<VideoDetail />} />
+     <Route path="/profile" element={<Profile />} />
      </Routes>
      </BrowserRouter>
      </AuthContextProvider>
