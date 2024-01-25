@@ -1,4 +1,4 @@
-// /* eslint-disable jsx-a11y/iframe-has-title */
+/* eslint-disable jsx-a11y/iframe-has-title */
 // import React, { useEffect, useState } from 'react';
 // import '../Styles/HomePage.css';
 // import '../Styles/VideoDetails.css';
@@ -22,7 +22,7 @@
 //   const [dislike, setDislike] = useState([])
 //   const [comments, setComments] = useState([]);
 //    const [commentData, setCommentData] = useState([]);
-
+  
 //   useEffect(() => {
 //     setVideoDataDet(videoDocument);
 //   }, [videoDocument]);
@@ -47,7 +47,7 @@
 
 //     fetchingSecondVideo();
 //   }, []);
-
+ 
 //   function truncateString(str, maxLength) {
 //     if (str.length > maxLength) {
 //       return str.substring(0, maxLength) + '...';
@@ -203,7 +203,7 @@
 //        <SlDislike  className='tumbsdown'/>
 //          <h2>150</h2>
 //        </div>
-//         </div>
+//       </div>        
 //       </div>
 
 //       <div className='desc'>

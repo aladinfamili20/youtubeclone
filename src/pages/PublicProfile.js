@@ -6,7 +6,7 @@ import '../Styles/Profile.css'
 import { useAuth } from '../auth/AuthContext';
 import '../Styles/HomePage.css'
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
-  const Profile = () => {
+  const PublicProfile = () => {
     const {user} = useAuth();
     const {id} = useParams();
     const navigate = useNavigate();
@@ -85,14 +85,12 @@ if (!user) {
       <div className='ProfNameCon'>
       <h2>{user.displayName}</h2>
       <div className='accountAction'>
-      <span><p>Switch account</p></span>
-      <span onClick={logoutUser}><b>Log out</b></span>
-      </div>
+      <span><p>Followers</p></span>
+       </div>
         </div>          
       </div>
       <div className='historyContainer'>
-  <h1>Your history</h1>
-  {videoHistory && videoHistory.length > 0 ? (
+   {videoHistory && videoHistory.length > 0 ? (
     videoHistory.map((videoHist, index) => (
       <>
         <div className='secondaryVideoCon' key={index}>
@@ -174,4 +172,4 @@ if (!user) {
   )
 }
 
-export default Profile
+export default PublicProfile

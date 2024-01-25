@@ -22,18 +22,39 @@
     color: #333;
     font-size: 30px;
  }
+
+ .profileContainer h1{
+    color: #333;
+ }
 .profileConent p{
-    margin: 0;
     border: 1px solid #0083FF;
     border-radius: 20px;
     padding: 5px;
     text-align: center;
-    
+    font-size: 15px;
+     
 }
 .profileConent p:hover{
     background-color: #0083FF;
     color: #ffffff;
     cursor: pointer;
+}
+
+.profileConent b{
+    /* border: 1px solid #0083FF; */
+    border-radius: 20px;
+    padding: 5px;
+    text-align: center;
+    font-size: 15px;
+     
+}
+.profileConent b:hover{
+    background-color: red;
+    color: #ffffff;
+    cursor: pointer;
+}
+.accountAction{
+    display: flex;
 }
 
  

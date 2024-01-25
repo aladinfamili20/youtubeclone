@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../Styles/Login.css'
 import { getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {useNavigate} from 'react-router-dom'      
 import {  GoogleAuthProvider,signInWithPopup, OAuthProvider } from "firebase/auth";
+import { addDoc, doc } from 'firebase/firestore';
+import { db } from '../data/firebase';
  
  const Login = ()=>{ 
     const navigate = useNavigate();
@@ -26,44 +28,42 @@ import {  GoogleAuthProvider,signInWithPopup, OAuthProvider } from "firebase/aut
     //   })
     // }
   
-    const signWithGoogle = ()=>{
-       const auth = getAuth();
+    const handleSaveUser = async (user) => {
+      const saveUserRef = doc(db, 'users', user.uid);
+      try {
+        await addDoc(saveUserRef, {
+          userId: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          profPhoto: user.photoURL,
+        });
+        console.log('User saved successfully', saveUserRef.id);
+        // Handle successful user save (e.g., redirect to profile)
+        // navigate('/profile');
+      } catch (err) {
+        console.log('Error logging in user', err);
+        // Handle error (e.g., display an error message)
+      }
+    };
+
+
+
+    const signWithGoogle = () => {
+      const auth = getAuth();
       const provider = new GoogleAuthProvider();
       signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-         const user = result.user       
-        //  navigate('/profile') 
-      }).catch((error) => {
-        console.log("Error", error);
-           const errorCode = error.code;
-           
+        .then((result) => {
+          const user = result.user;
+          handleSaveUser(user);
+          // Redirect to the profile page or handle success accordingly
+          // navigate('/profile');
+        })
+        .catch((error) => {
+          console.log('Error', error);
+          // Handle Google sign-in error (e.g., display an error message)
         });
-    }
-
-
-    // Yahoo
-
-    const loginWithYahoo = () => {
-      const auth = getAuth();
+    };
   
-      const provider = new OAuthProvider('yahoo.com');
-      signInWithPopup(auth, provider)
-    .then((result) => {
-      // IdP data available in result.additionalUserInfo.profile
-      // ...
-  
-      // Yahoo OAuth access token and ID token can be retrieved by calling:
-      const credential = OAuthProvider.credentialFromResult(result);
-      const accessToken = credential.accessToken;
-      const idToken = credential.idToken;
-      navigate('/profile') 
-    })
-    .catch((error) => {
-      // Handle error.
-      console.log(error)
-    });
-  } 
       return (
       <div className='loginMainContainer'>
         <section className='loginContainer'>        

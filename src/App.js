@@ -11,6 +11,7 @@ import { auth } from './data/firebase';
 import UploadVideo from './pages/UploadVideo';
 import VideoDetail from './pages/VideoDetail';
 import Profile from './pages/Profile';
+import PublicProfile from './pages/PublicProfile';
   
 function App() {
   const [user, setUser]= useState('')
@@ -35,6 +36,8 @@ function App() {
      <Route path="/uploadvideo" element={<UploadVideo />} />
      <Route path="/videodetail/:id" element={<VideoDetail />} />
      <Route path="/profile" element={<Profile />} />
+     <Route path="/vieworder/:userId" element={<PublicProfile />} />
+
      </Routes>
      </BrowserRouter>
      </AuthContextProvider>

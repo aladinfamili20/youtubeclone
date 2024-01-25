@@ -1,32 +1,33 @@
 import { doc, getDoc } from 'firebase/firestore'
 import  { useEffect, useState } from 'react'
 import { db } from '../data/firebase'
-
-const VideoFecthCollection = (collectionName, documentID) => {
-    const [videoDocument, setVideoDocument] = useState(null)
+import { useAuth } from '../auth/AuthContext'
+ const UserFetchCollection = (collectionName, documentID) => {
+    const [UserDocumments, setUserDocumments] = useState(null)
     const [loading, setLoading] = useState(null)
-    const getVideoDocument = async()=>{
+    const {user} = useAuth();
+    const getUserDocumments = async()=>{
         const docRef = doc(db, collectionName, documentID);
         const docSnap = await getDoc(docRef);
         if(docSnap.exists()){
             const obj = {
                 id: documentID,
+                user:user.uid,
                 ...docSnap.data(),
             }
-            setVideoDocument(obj);
+            setUserDocumments(obj);
             setLoading(false);
         }else{
-     
-                // alert('Video not found')
-                console.log('Video not found')
+            // alert('Video not found')
+            console.log('Video not found')
         }
     };
 
     useEffect(()=>{
-        getVideoDocument();
+        getUserDocumments();
     })
 
-    return {videoDocument, loading}
+    return {UserDocumments, loading}
 }
 
-export default VideoFecthCollection
+export default UserFetchCollection
