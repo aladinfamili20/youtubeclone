@@ -25,6 +25,9 @@
 
  .profileContainer h1{
     color: #333;
+    font-size: 20px;
+    font-weight: normal;
+    margin-left: 10px;
  }
 .profileConent p{
     border: 1px solid #0083FF;

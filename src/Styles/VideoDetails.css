@@ -12,13 +12,9 @@
     border: none;
 
 }
-
 .commentsContainer img {
     border-radius: 50px;
 }
-
- 
-
   .commentsContainer h2{
     border: 1px solid #0083FF;
     padding: 10px;
@@ -30,4 +26,8 @@
     cursor: pointer;
     background-color: #0083FF;
     color: #fff;
+   }
+
+   .nextText{
+   margin-left: 10px;
    }

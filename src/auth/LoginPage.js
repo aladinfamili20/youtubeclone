@@ -38,11 +38,8 @@ import { db } from '../data/firebase';
           profPhoto: user.photoURL,
         });
         console.log('User saved successfully', saveUserRef.id);
-        // Handle successful user save (e.g., redirect to profile)
-        // navigate('/profile');
       } catch (err) {
         console.log('Error logging in user', err);
-        // Handle error (e.g., display an error message)
       }
     };
 

@@ -4,7 +4,7 @@ import '../Styles/UserNavigation.css'
 import { useAuth } from '../auth/AuthContext';
 import { IoAddCircleOutline, IoSearch,} from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, startAfter, endBefore } from 'firebase/firestore';
 
  const UserNavigation = () => {
   const {user} = useAuth();  
@@ -16,24 +16,31 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
     // Implement your navigation logic here
     console.log('Navigating to profile with UID:', uid);
   };
-   const handleSearch = async () => {
+  const handleSearch = async () => {
     try {
+      setIsLoading(true);
+      
       // Perform a Firestore query to search for users
-      const q = query(collection(db, 'videos'), where('displayName',  '>=', searchQuery));
+      const q = query(
+        collection(db, 'videos'),
+        where('displayName', '>=', searchQuery),
+        where('displayName', '<=', searchQuery + '\uf8ff')
+      );
       const querySnapshot = await getDocs(q);
-
+  
       const results = [];
       querySnapshot.forEach((doc) => {
         const user = doc.data();
         results.push(user);
       });
-
+  
       setSearchResults(results);
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
       console.error('Error searching users:', error);
     }
-  }
+  };
+  
 
 
 
@@ -50,6 +57,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
              <input type='text'  placeholder='Search for videos and creators' value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} className='searchBar'/>
              <IoSearch onClick={handleSearch}  className='searchIcon'/>
              </div>
+             <div className='serchedusers'>
              {searchResults.map((item) => (
         <React.Fragment key={item.userId || item.displayName || item.email}>
           <div className="searchInfo">
@@ -63,6 +71,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
           <div className="divider"></div>
         </React.Fragment>
       ))}
+             </div>
              </div>
             <div className='listC'>
               <div className='headerProfileDets'>

@@ -18,7 +18,7 @@ const VideoFecthCollection = (collectionName, documentID) => {
         }else{
      
                 // alert('Video not found')
-                console.log('Video not found')
+                // console.log('Video not found')
         }
     };
 

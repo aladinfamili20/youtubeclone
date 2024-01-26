@@ -5,13 +5,18 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../Styles/Profile.css'
 import { useAuth } from '../auth/AuthContext';
 import '../Styles/HomePage.css'
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, increment, orderBy, query, serverTimestamp, updateDoc, where } from 'firebase/firestore';
+
   const Profile = () => {
     const {user} = useAuth();
     const {id} = useParams();
     const navigate = useNavigate();
     const [videoHistory, setVideoHistory] = useState([]);
     const [userProfVodeos, setUserProfVideos] = useState([])
+    const [userVidHistory, setUserVidHistory] = useState(null)
+   const [viewCount, setViewCount] = useState(0);
+   const [videoData, setVideoData] = useState([]);
+
     const logoutUser = () => {
         signOut(auth)
           .then(() => {
@@ -21,6 +26,74 @@ import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
             console.log(error.message);
           });
       };
+
+      useEffect(() => {
+        const fetchVideo = async () => {
+          try {
+            const videoRef = collection(db, 'videos');
+            const querySnapshot = await getDocs(videoRef);
+            const videoDocuments = querySnapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+             setVideoData(videoDocuments);
+          } catch (error) {
+            console.error('Error fetching video data:', error);
+           }
+        };
+        fetchVideo();
+      }, []);
+    useEffect(()=>{
+      onAuthStateChanged(auth, (user)=>{
+        if(user){
+          const uid = user.uid;
+          const getUserHistory = async()=>{
+            const getVideoHistoryRef = collection(db, 'videos');
+            const querySnapshot = query(getVideoHistoryRef, where("userId", "==", uid))
+            const snapshot  = await getDocs(querySnapshot);
+            const userVidHistoryDocs = snapshot.docs.map((doc)=>(
+              setUserVidHistory({
+               Hours:doc.data().Hours,
+                description:doc.data().description,
+               displayName:doc.data().displayName,
+               postTime:doc.data().postTime,
+               profPhoto:doc.data().profPhoto,
+               title:doc.data().title,
+               userId:doc.data().userId,
+               videoFile:doc.data().videoFile,
+               viewCount:viewCount,
+              })
+            ))
+          }
+          getUserHistory();
+        }
+      })
+    }) 
+      const addVideoToHistory = async ({videoId}) => {
+        try {
+          const videoDocRef = doc(db, 'videos', videoId);
+          await updateDoc(videoDocRef, {
+            views: increment(1),
+          });
+          const historyRef = collection(db, `users/${user.uid}/videoHistory`);
+          await addDoc(historyRef, {
+            Hours:userVidHistory.Hours,
+                description:userVidHistory.description,
+               displayName:userVidHistory.displayName,
+                postTime:userVidHistory.postTime,
+               profPhoto:userVidHistory.profPhoto,
+               title:userVidHistory.title,
+               userId:userVidHistory.userId,
+               videoFile:userVidHistory.videoFile,
+              watchedAt: serverTimestamp(),
+          });
+          setViewCount((prevCount) => prevCount + 1);
+    
+        console.log('Video added to history with id',historyRef.id )
+        } catch (error) {
+          console.error('Error adding video to history:', error);
+        }
+      }; 
 
       useEffect(() => {
         const fetchVideoHistory = async () => {
@@ -116,8 +189,7 @@ if (!user) {
               <div className='nameCont'>
                 <h2>{videoHist.displayName}</h2>
                 <div className='dateViews'>
-                  <p>54 Views</p>
-                  <p>{videoHist.postTime}</p>
+                 
                 </div>
               </div>
             </div>
@@ -157,7 +229,7 @@ if (!user) {
             <div className='nameCont'>
               <h2>{userData.displayName}</h2>
               <div className='dateViews'>
-                <p>54 Views</p>
+              <p>{`${userData.views || 0} Views`}</p>
                 <p>{userData.postTime}</p>
               </div>
             </div>

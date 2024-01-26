@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../Styles/HomePage.css'
-import { addDoc, collection, doc, getDocs, orderBy, query, serverTimestamp, where } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, increment, orderBy, query, serverTimestamp, updateDoc, where } from 'firebase/firestore';
 import { auth, db } from '../data/firebase';
 import { Link } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -10,7 +10,10 @@ import { useAuth } from '../auth/AuthContext';
   const { user } = useAuth();
   const [videoData, setVideoData] = useState([]);
    const [userVidHistory, setUserVidHistory] = useState(null)
-  useEffect(() => {
+   const [viewCount, setViewCount] = useState(0);
+ 
+  
+   useEffect(() => {
     const fetchVideo = async () => {
       try {
         const videoRef = collection(db, 'videos');
@@ -26,13 +29,10 @@ import { useAuth } from '../auth/AuthContext';
     };
     fetchVideo();
   }, []);
-
-
 useEffect(()=>{
   onAuthStateChanged(auth, (user)=>{
     if(user){
       const uid = user.uid;
-
       const getUserHistory = async()=>{
         const getVideoHistoryRef = collection(db, 'videos');
         const querySnapshot = query(getVideoHistoryRef, where("userId", "==", uid))
@@ -46,17 +46,21 @@ useEffect(()=>{
            profPhoto:doc.data().profPhoto,
            title:doc.data().title,
            userId:doc.data().userId,
-           videoFile:doc.data().videoFile
+           videoFile:doc.data().videoFile,
+           viewCount:viewCount,
           })
         ))
       }
       getUserHistory();
     }
   })
-})
- 
-  const addVideoToHistory = async () => {
+}) 
+  const addVideoToHistory = async ({videoId}) => {
     try {
+      const videoDocRef = doc(db, 'videos', videoId);
+      await updateDoc(videoDocRef, {
+        views: increment(1),
+      });
       const historyRef = collection(db, `users/${user.uid}/videoHistory`);
       await addDoc(historyRef, {
         Hours:userVidHistory.Hours,
@@ -69,52 +73,46 @@ useEffect(()=>{
            videoFile:userVidHistory.videoFile,
           watchedAt: serverTimestamp(),
       });
+      setViewCount((prevCount) => prevCount + 1);
+
     console.log('Video added to history with id',historyRef.id )
     } catch (error) {
       console.error('Error adding video to history:', error);
     }
-  };
- 
+  }; 
   function truncateString(str, maxLength) {
     if (str.length > maxLength) {
       return str.substring(0, maxLength) + '...';
     }
     return str;
-  }
- 
+  } 
   return (
     <div>
       <div className='homeContainer'>
-       <div  className='homeContainerGrid1' >
+       <div  className='homeContainerGrid1'>
         <div className='homeVidGrid2'>
      {videoData && videoData.length > 0 ? (
       videoData.map((secondaryVideo, index)=>(
         <>
         <div className='secondaryVideoCon' key={index}>
-        <Link to={`/videodetail/${secondaryVideo.id}`} onClick={addVideoToHistory}  >
+        <Link to={`/videodetail/${secondaryVideo.id}`}
+        onClick={() => addVideoToHistory({ videoId: secondaryVideo.id })}  >
           <video width="350" height="200" className='playinVid' controls>
             <source src={secondaryVideo.videoFile} type="video/mp4" />
           </video>
         </Link>
         <div className='secondTitle'>
-          <p>{truncateString(secondaryVideo.title, 50)}</p>
-          
-        </div>
-
-         
-        <div>
- 
-          
+          <p>{truncateString(secondaryVideo.title, 50)}</p>          
+        </div>         
+        <div>           
           <Link to={`/vieworder/${secondaryVideo.userId}`} className='link'>
           <div className='secondaryVideoInfo'>
             <img src={secondaryVideo.profPhoto} width={30} height={30} className='secondProfInfo' alt='secondaryVideoProfImg' />
-             
-            <div className='nameCont'>
-             
+            <div className='nameCont'>             
               <h2>{secondaryVideo.displayName}</h2>
               <div className='dateViews'>
-                <p>54 Views</p>
-                <p>1/20/2024</p>
+              <p>{`${secondaryVideo.views || 0} Views`}</p>
+              <p>{secondaryVideo.postTime}</p>
               </div>
             </div>
           </div>
@@ -126,12 +124,9 @@ useEffect(()=>{
     ) : (
       <p>No videos available at the moment</p>
     )}
-  
-       
-  
+ 
         </div>
-        
-       
+ 
        </div>
       </div>
     </div>

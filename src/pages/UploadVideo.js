@@ -13,7 +13,8 @@ import {  useNavigate } from 'react-router-dom';
     const [videoFile, setVideoFile] = useState(null);
     const [thumbnailUrl, setThumbnailUrl] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
-    
+     const [uploadThum, setUploadThum] = useState('https://static.vecteezy.com/system/resources/previews/004/640/699/non_2x/circle-upload-icon-button-isolated-on-white-background-vector.jpg');
+
      const handleFileChange = async (event) => {
       try {
         const file = event.target.files[0];
@@ -25,10 +26,14 @@ import {  useNavigate } from 'react-router-dom';
             setThumbnailUrl(e.target.result);
           };
           reader.readAsDataURL(file);
+          setUploadThum(URL.createObjectURL(file));
+
         } else {
           setThumbnailUrl(null);
+          setUploadThum('https://static.vecteezy.com/system/resources/previews/004/640/699/non_2x/circle-upload-icon-button-isolated-on-white-background-vector.jpg');
+
         }
-  
+ 
         const storageRef = ref(storage, `videos/${Date.now()}${file.name}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
   
@@ -48,6 +53,9 @@ import {  useNavigate } from 'react-router-dom';
         );
       } catch (error) {
         console.error('Error handling file change:', error);
+      }finally {
+        // Reset upload progress when a new file is selected
+        setUploadProgress(0);
       }
     };
   
@@ -77,47 +85,47 @@ import {  useNavigate } from 'react-router-dom';
           console.error('Error uploading video to Firebase', error);
         }
       };
-  
+
+  const File = ()=>{
+    document.getElementById("fileuplaod").click();
+    }
+    const binaryData = []
+    binaryData.push(videoFile)
+    const blob = new Blob(binaryData, {type: "video/mp4"})
+    const url = URL.createObjectURL(blob)
+
+  const uploadThumnail = 'https://static.vecteezy.com/system/resources/previews/004/640/699/non_2x/circle-upload-icon-button-isolated-on-white-background-vector.jpg';
+
   return (
     <div>
         <div className='uploadContainer'>
-            <input type='file'  accept="video/*" onChange={handleFileChange} />
+            <input type='file' accept="video/*" onChange={handleFileChange} id='fileuplaod'  style={{display:'none'}} />
             <div className='uploadVideoContainer'>
             {/* <img src={require('../assets/upload.png')}  width={200} height={300} className='uploadingvideo'alt='uploadvideosecton'/> 
             */}
 
 {videoFile && (
-  <video width="500" height="300" controls>
+ 
+   <video width="500" height="300" controls>
     <source src={videoFile.downloadURL || URL.createObjectURL(videoFile)} type="video/mp4" />
    </video>
+ 
 )}
-                 
+ 
+ <img src={uploadThum} alt='' className='uploadThum' onClick={File}/>
+
+  
             <div className='titleContainer'>
-               <input type='text' placeholder='Tile of the image' value={title} onChange={(e)=>setTitle(e.target.value)} className='videoTitle'/>
-               <h2>Categoties</h2>            
-               <div className='categories'>
-                <h3>Comedy</h3>
-                <h3>Sport</h3>
-                <h3>Music</h3>
-                <h3>Animation</h3>
-                <h3>Movies</h3>
-                <h3>Dance</h3>
-               </div>
-               <div className='categories'>
-                <h3>Comedy</h3>
-                <h3>Sport</h3>
-                <h3>Music</h3>
-                <h3>Animation</h3>
-                <h3>Movies</h3>
-                <h3>Dance</h3>               
-               </div>
+            <input type='text' placeholder='Title of the video' value={title} onChange={(e)=>setTitle(e.target.value)} className='videoTitle'/>
+                
             </div>
             </div>
-            <textarea type='text' placeholder='Tile of the image' value={description} onChange={(e)=>setDescription(e.target.value)} className='discription' >
+            <textarea type='text' placeholder='Description' value={description} onChange={(e)=>setDescription(e.target.value)} className='discription' >
              
             </textarea>
+            {uploadProgress > 0 && <p>Upload Progress: {uploadProgress}%</p>}
 
-            <div className='uploadVideo' onClick={handleUpload}>
+            <div className='uploadVideoButton' onClick={handleUpload}>
                 <h2>Upload Video</h2>
             </div>
 
