@@ -1,175 +1,176 @@
 .homeContainer {
-    margin: auto;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-   }
-.homeContainerGrid1 {
-    display: flex;
-    }
-.playinVid {
-    margin-top: 50px;
-    margin: 10px;
- }
-.commentSection{
-    margin-left: 50px;
-    flex-direction: column;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-left: 30px;
   }
+.homeContainerGrid1 {
+  display: flex;
+  }
+.playinVid {
+  margin-top: 50px;
+  margin: 10px;
+}
+.commentSection{
+  margin-left: 50px;
+  flex-direction: column;
+}
 
 .homeProfPic img{
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-    
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  
 }
 
 .homeProfPic {
-    display: flex;
-    margin-top: 10px;
+  display: flex;
+  margin-top: 10px;
 }
 .commentCont{
-    width: 450px;
-    background-color: aliceblue;
-    margin-left: 20px;
-    padding: 10px;
-    border-radius: 20px;
+  width: 450px;
+  background-color: aliceblue;
+  margin-left: 20px;
+  padding: 10px;
+  border-radius: 20px;
 }
 
 .secondaryVideoCon {
-    display: inline-block;
-     height: auto;
-    
+  display: inline-block;
+   height: auto;
+  
 }
 
 .secondaryVid {
-    margin: 10px;
+  margin: 10px;
 }
 .profImg {
-    border-radius: 50px;
+  border-radius: 50px;
 }
 
 .payingVidContainer {
-    display: flex;
-      align-items: center;
-      padding: 10px;             
+  display: flex;
+    align-items: center;
+    padding: 10px;             
 }
 .profImg {
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  .playingVidNameCon {
-    display: flex;
-    flex-direction: column;
-  }
- 
-  h2 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #333;
-    text-decoration: none;
-  }
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.playingVidNameCon {
+  display: flex;
+  flex-direction: column;
+}
 
-  p {
-    margin: 0;
-    color: #666;
-    text-decoration: none;
-  }
-  .link{
-    text-decoration: none;
-  }
+h2 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #333;
+  text-decoration: none;
+}
 
-  .subs{
-    background-color: #0083FF;
-    padding: 10px;
-    border-radius: 30px;
-    margin-left: 40px;
-    cursor: pointer;
-  }
+p {
+  margin: 0;
+  color: #666;
+  text-decoration: none;
+}
+.link{
+  text-decoration: none;
+}
 
-  .subs h2{
-    color: white;
-  }
+.subs{
+  background-color: #0083FF;
+  padding: 10px;
+  border-radius: 30px;
+  margin-left: 40px;
+  cursor: pointer;
+}
+
+.subs h2{
+  color: white;
+}
 
 .likes {
-    background-color: #0083FF;
-    padding: 10px;
-    border-radius: 30px;
-    margin-left: 40px;
-    display: flex;
-    justify-content: space-between;
-    
+  background-color: #0083FF;
+  padding: 10px;
+  border-radius: 30px;
+  margin-left: 40px;
+  display: flex;
+  justify-content: space-between;
+  
 }
 .tumbsupCont, .tumbsdownCont {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
 }
 
 .tumbsupCont h2, .tumbsdownCont h2{
-    margin-left: 10px;
-    color: #fff;
+  margin-left: 10px;
+  color: #fff;
 }
 .tumbsdown, .tumbsup{
-    font-size: 25px;
+  font-size: 25px;
 }
 .tumbsup:hover{
-    cursor: pointer;
-    color: white;
+  cursor: pointer;
+  color: white;
+}
+
+.tumbsdown:hover{
+  cursor: pointer;
+  color: red;
+}
+
+.desc p{
+  margin: 10px;
+  border-radius: 10px;
+   padding: 10px;
+   background-color: aliceblue;
+   color: #000000;
+}
+
+.secondaryVideoInfo {
+  display: flex;
+  margin: 10px;
+  align-items: center;
+}
+.secondaryVideoInfo h2{
+  font-size: 15px;
+}
+.nameCont {
+  margin-left: 10px;
+}
+.dateViews {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: auto;
+  width: 300px;
+  
+}
+.dateViews p {
+  margin-left: 10px;
+   width: 100%;
+}
+
+.secondaryVideoInfo p {
+  margin: 0;
+}
+.secondTitle p{   
+  width: auto;  
+  margin-left: 10px;
  }
 
- .tumbsdown:hover{
-    cursor: pointer;
-    color: red;
- }
-
- .desc p{
-    margin: 10px;
-    border-radius: 10px;
-     padding: 10px;
-     background-color: aliceblue;
-     color: #000000;
- }
-
- .secondaryVideoInfo {
-    display: flex;
-    margin: 10px;
-    align-items: center;
- }
- .secondaryVideoInfo h2{
-    font-size: 15px;
- }
- .nameCont {
-    margin-left: 10px;
- }
- .dateViews {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: auto;
-    width: 300px;
-    
-  }
-  .dateViews p {
-    margin-left: 10px;
-     width: 100%;
-  }
-
- .secondaryVideoInfo p {
-    margin: 0;
-  }
-  .secondTitle p{   
-    width: auto;  
-    margin-left: 10px;
-   }
-
-  .secondProfInfo {
-    border-radius: 20px;
-  }
-  .secondaryVideoCon video{
-    cursor: pointer;
-  }
-  .truncate-text {
-    max-width: 60%;
-    white-space: nowrap;
-     text-overflow: ellipsis;
- }
+.secondProfInfo {
+  border-radius: 20px;
+}
+.secondaryVideoCon video{
+  cursor: pointer;
+}
+.truncate-text {
+  max-width: 60%;
+  white-space: nowrap;
+   text-overflow: ellipsis;
+}

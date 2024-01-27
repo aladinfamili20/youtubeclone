@@ -49,7 +49,7 @@ const ClientNavigation = () => {
              </div>
              <div className='serchedusers'>
              {searchResults.map((item) => (
-        <React.Fragment key={item.userId || item.displayName || item.email }>
+        <React.Fragment key={ item.displayName}>
           <div className="searchInfo">
             <div>
               <img src={item.profPhoto} className="profileImage" alt="Profileimg" />

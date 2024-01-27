@@ -59,7 +59,7 @@ import { collection, getDocs, query, where, orderBy, startAfter, endBefore } fro
              </div>
              <div className='serchedusers'>
              {searchResults.map((item) => (
-        <React.Fragment key={item.userId || item.displayName || item.email}>
+        <React.Fragment key={item.displayName}>
           <div className="searchInfo">
             <div onClick={() => navigateToProfile(item.uid)}>
               <img src={item.profPhoto} className="profileImage" alt="Profileimg" />

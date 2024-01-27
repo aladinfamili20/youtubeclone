@@ -5,7 +5,7 @@ import '../Styles/VideoDetails.css';
 import { addDoc, arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, increment, query, serverTimestamp, updateDoc, where } from 'firebase/firestore';
 import { auth, db } from '../data/firebase';
 import { SlLike, SlDislike } from 'react-icons/sl'; 
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import VideoFecthCollection from '../components/VideoFecthCollection';
 import {useAuth} from '../auth/AuthContext'
 import { onAuthStateChanged } from 'firebase/auth';
@@ -226,7 +226,7 @@ const VideoDetail = () => {
  
   return (
     <div>
-      <div className='homeContainer'>
+      <div className='homeContainer2'>
         <div className='homeContainerGrid1'>
           <div className='homeVidGrid2'>
             {/* Currently playing video */}
@@ -308,34 +308,30 @@ const VideoDetail = () => {
               <h2 className='nextText'>Coming up</h2>
              {secondVideoData.map((secondVideo, index) => (
                 
-                <div
-                  className='secondaryVideoCon'
-                  key={index}
-                  onClick={() => handleSecondaryVideoClick(secondVideo)}
-                >
-                  
-         <video width="350" height="200" className='playinVid' 
-         onClick={() => addVideoToHistory({ videoId: secondVideo.id })}
-         >
-           <source src={secondVideo.videoFile} type="video/mp4" />
-          </video>
-             <div className='secondTitle'>
-              <p>{truncateString(secondVideo.title, 40)}</p>
-                </div>                 
-         <div>
-        <div className='secondaryVideoInfo'>
-          <img src={secondVideo.profPhoto} width={30} height={30} className='secondProfInfo' alt='secondaryVideoProfImg'/>
-          <div className='nameCont'>
-            <h2>{secondVideo.displayName}</h2>
-            <div className='dateViews'>
-              <p>{`${secondVideo.views || 0} Views`}</p>
-                <p>{secondVideo.postTime}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-                </div>
-            
+                <div className='secondaryVideoCon' key={index}>
+                  <Link to={`/videodetail/${secondVideo.id}`} onClick={() => handleSecondaryVideoClick(secondVideo)}>
+                    <video width="350" height="200" className='playinVid' controls>
+                      <source src={secondVideo.videoFile} type="video/mp4" />
+                    </video>
+                  </Link>
+                  <div className='secondTitle'>
+                    <p>{truncateString(secondVideo.title, 50)}</p>
+                  </div>
+                  <div>
+                    <Link to={`/vieworder/${secondVideo.userId}`} className='link'>
+                      <div className='secondaryVideoInfo'>
+                        <img src={secondVideo.profPhoto} width={30} height={30} className='secondProfInfo' alt='secondaryVideoProfImg' />
+                        <div className='nameCont'>
+                          <h2>{secondVideo.displayName}</h2>
+                          <div className='dateViews'>
+                            <p>{`${secondVideo.views || 0} Views`}</p>
+                            <p>{secondVideo.postTime}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                </div>           
               ))}
              </div>
           </div>

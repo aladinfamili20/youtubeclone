@@ -2,7 +2,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: aliceblue;
 }
+.homeContainer2 {
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    margin-left: 30px;
+    }
 .commentInput {
     width: 100%;
     height: auto;
